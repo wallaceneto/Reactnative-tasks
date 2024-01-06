@@ -5,6 +5,7 @@ import '../../../node_modules/moment/locale/pt-br';
 
 import styles from './styles';
 import todayImage from '../../../assets/imgs/today.jpg';
+import Task from '../../components/Task/Task';
 
 export default class TaskList extends Component {
   render() {
@@ -20,9 +21,12 @@ export default class TaskList extends Component {
         </ImageBackground>
 
         <View style={styles.taskList}>
-          <Text>Tarefa #01</Text>
-          <Text>Tarefa #02</Text>
-          <Text>Tarefa #03</Text>
+          <Task
+            desc={'Comprar livro'}
+            estimateAt={new Date()}
+            doneAt={new Date('2024-01-02')}
+          />
+          <Task desc={'Ler livro'} estimateAt={new Date()}  />
         </View>
       </View>
     );
