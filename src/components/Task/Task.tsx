@@ -1,5 +1,5 @@
 import React from 'react';
-import {Text, TextStyle, View} from 'react-native';
+import {Text, TextStyle, View, TouchableWithoutFeedback} from 'react-native';
 import { Icon } from '@rneui/themed';
 import moment from 'moment';
 import '../../../node_modules/moment/locale/pt-br';
@@ -7,8 +7,10 @@ import '../../../node_modules/moment/locale/pt-br';
 import styles from './styles';
 
 type Props = {
+  id: number;
   desc: String;
   estimateAt: Date;
+  toggleTask: Function,
   doneAt?: Date;
 };
 
@@ -33,9 +35,11 @@ export default function Task(props: Props) {
 
   return (
     <View style={styles.container}>
-      <View style={styles.checkContainer}>
-        {getCheckView(props.doneAt)}
-      </View>
+      <TouchableWithoutFeedback onPress={() => props.toggleTask(props.id)}>
+        <View style={styles.checkContainer}>
+            {getCheckView(props.doneAt)}
+        </View>
+      </TouchableWithoutFeedback>
       <View>
         <Text style={[styles.desc, doneOrNotStyle]}>{props.desc}</Text>
         <Text style={styles.date}>{formattedDate + ''}</Text>
