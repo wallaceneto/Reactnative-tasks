@@ -1,4 +1,4 @@
-import {StyleSheet} from 'react-native';
+import {Platform, StyleSheet} from 'react-native';
 
 import commonStyles from '../../global/commonStyles';
 
@@ -12,6 +12,12 @@ const styles = StyleSheet.create({
   titleBar: {
     flex: 1,
     justifyContent: 'flex-end',
+  },
+  iconBar: {
+    flexDirection: 'row',
+    justifyContent: 'flex-end',
+    marginHorizontal: 20,
+    marginTop: Platform.OS === 'ios' ? 40 : 10,
   },
   taskList: {
     flex: 7,
