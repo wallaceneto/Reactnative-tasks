@@ -6,6 +6,7 @@ import {
   ImageBackground,
   FlatList,
   TouchableOpacity,
+  Alert,
 } from 'react-native';
 import moment from 'moment';
 import '../../../node_modules/moment/locale/pt-br';
@@ -86,6 +87,22 @@ export default class TaskList extends Component {
     this.setState({tasks}, this.filterTask);
   };
 
+  addTask = (newTask: TaskType) => {
+    if (!newTask.desc.trim()) {
+      Alert.alert('Dados inválidos', 'Descrição não informada');
+      return;
+    }
+
+    const tasks = [...this.state.tasks];
+    tasks.push({
+      id: newTask.id,
+      desc: newTask.desc,
+      estimateAt: newTask.estimateAt,
+    });
+
+    this.setState({tasks, showAddTask: false}, this.filterTask);
+  };
+
   render() {
     const today = moment().locale('pt-br').format('ddd, D [de] MMMM');
 
@@ -94,6 +111,7 @@ export default class TaskList extends Component {
         <AddTask
           isVisible={this.state.showAddTask}
           onCancel={() => this.setState({showAddTask: false})}
+          onSave={this.addTask}
         />
 
         <ImageBackground source={todayImage} style={styles.background}>
