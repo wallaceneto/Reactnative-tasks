@@ -19,9 +19,6 @@ const styles = StyleSheet.create({
     marginHorizontal: 20,
     marginTop: Platform.OS === 'ios' ? 40 : 10,
   },
-  taskList: {
-    flex: 7,
-  },
   title: {
     fontFamily: commonStyles.fontFamily,
     color: commonStyles.colors.secondary,
@@ -35,6 +32,20 @@ const styles = StyleSheet.create({
     fontSize: 20,
     marginLeft: 20,
     marginBottom: 30,
+  },
+  taskList: {
+    flex: 7,
+  },
+  addButton: {
+    position: 'absolute',
+    right: 30,
+    bottom: 30,
+    width: 50,
+    height: 50,
+    borderRadius: 25,
+    backgroundColor: commonStyles.colors.today,
+    justifyContent: 'center',
+    alignItems: 'center',
   },
 });
 

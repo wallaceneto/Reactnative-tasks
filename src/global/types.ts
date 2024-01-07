@@ -2,7 +2,7 @@ type TaskType = {
   id: number;
   desc: String;
   estimateAt: Date;
-  toggleTask?: Function;
+  toggleTask?: (id: number) => void;
   doneAt?: Date;
 };
 

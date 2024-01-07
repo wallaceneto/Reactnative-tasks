@@ -15,9 +15,11 @@ import styles from './styles';
 import todayImage from '../../../assets/imgs/today.jpg';
 import Task from '../../components/Task/Task';
 import {TaskType} from '../../global/types';
+import AddTask from '../AddTask/AddTask';
 
 type TaskListState = {
   showDoneTasks: boolean;
+  showAddTask: boolean;
   visibleTasks: TaskType[];
   tasks: TaskType[];
 };
@@ -25,6 +27,7 @@ type TaskListState = {
 export default class TaskList extends Component {
   state: TaskListState = {
     showDoneTasks: true,
+    showAddTask: false,
     visibleTasks: [],
     tasks: [
       {
@@ -88,6 +91,11 @@ export default class TaskList extends Component {
 
     return (
       <View style={styles.container}>
+        <AddTask
+          isVisible={this.state.showAddTask}
+          onCancel={() => this.setState({showAddTask: false})}
+        />
+
         <ImageBackground source={todayImage} style={styles.background}>
           <View style={styles.iconBar}>
             <TouchableOpacity onPress={this.toggleFilter}>
@@ -114,6 +122,13 @@ export default class TaskList extends Component {
             )}
           />
         </View>
+
+        <TouchableOpacity
+          activeOpacity={0.7}
+          style={styles.addButton}
+          onPress={() => this.setState({showAddTask: true})}>
+          <Icon name="plus" size={20} color={commonStyles.colors.secondary} />
+        </TouchableOpacity>
       </View>
     );
   }
