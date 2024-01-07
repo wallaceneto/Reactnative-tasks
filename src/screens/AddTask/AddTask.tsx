@@ -6,7 +6,10 @@ import {
   Text,
   TextInput,
   TouchableOpacity,
+  Platform,
 } from 'react-native';
+import DateTimePicker from '@react-native-community/datetimepicker';
+import moment from 'moment';
 
 import styles from './styles';
 
@@ -15,10 +18,39 @@ type AddTaskProps = {
   onCancel: () => void;
 };
 
-const initialState = {desc: ''};
+const initialState = {desc: '', date: new Date(), showDatePicker: false};
 
 export default class AddTask extends Component<AddTaskProps> {
   state = {...initialState};
+
+  getDateTimePicker = () => {
+    let datePicker = (
+      <DateTimePicker
+        value={this.state.date}
+        onChange={(_, date) => this.setState({date, showDatePicker: false})}
+        mode="date"
+      />
+    );
+
+    if (Platform.OS === 'android') {
+      const dateString = moment(this.state.date).format(
+        'ddd, D [de] MMMM [de] YYYY',
+      );
+
+      datePicker = (
+        <View>
+          <TouchableOpacity
+            onPress={() => this.setState({showDatePicker: true})}>
+            <Text style={styles.date}>{dateString}</Text>
+          </TouchableOpacity>
+
+          {this.state.showDatePicker && datePicker}
+        </View>
+      );
+    }
+
+    return datePicker;
+  };
 
   render() {
     return (
@@ -38,6 +70,8 @@ export default class AddTask extends Component<AddTaskProps> {
                   onChangeText={desc => this.setState({desc})}
                   value={this.state.desc}
                 />
+
+                {this.getDateTimePicker()}
 
                 <View style={styles.buttons}>
                   <TouchableOpacity onPress={this.props.onCancel}>

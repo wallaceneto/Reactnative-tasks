@@ -41,6 +41,11 @@ const styles = StyleSheet.create({
     marginRight: 30,
     color: commonStyles.colors.today,
   },
+  date: {
+    fontFamily: commonStyles.fontFamily,
+    fontSize: 20,
+    marginLeft: 15,
+  },
 });
 
 export default styles;
