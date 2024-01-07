@@ -10,6 +10,7 @@ import {
 } from 'react-native';
 import moment from 'moment';
 import '../../../node_modules/moment/locale/pt-br';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import commonStyles from '../../global/commonStyles';
 import styles from './styles';
@@ -25,39 +26,24 @@ type TaskListState = {
   tasks: TaskType[];
 };
 
-export default class TaskList extends Component {
-  state: TaskListState = {
-    showDoneTasks: true,
-    showAddTask: false,
-    visibleTasks: [],
-    tasks: [
-      {
-        id: Math.random(),
-        desc: "Comprar livro 'Maus'",
-        estimateAt: new Date(),
-        doneAt: new Date(),
-      },
-      {
-        id: Math.random(),
-        desc: "Ler livro 'Maus'",
-        estimateAt: new Date(),
-      },
-      {
-        id: Math.random(),
-        desc: "Comprar livro 'Maus'",
-        estimateAt: new Date(),
-        doneAt: new Date(),
-      },
-      {
-        id: Math.random(),
-        desc: "Ler livro 'Maus'",
-        estimateAt: new Date(),
-      },
-    ],
-  };
+const initialState = {
+  showDoneTasks: true,
+  showAddTask: false,
+  visibleTasks: [],
+  tasks: [],
+};
 
-  componentDidMount() {
-    this.filterTask();
+export default class TaskList extends Component {
+  state: TaskListState = {...initialState};
+
+  async componentDidMount() {
+    const stateString = await AsyncStorage.getItem('tasksState');
+    let state = initialState;
+
+    if (stateString) {
+      state = JSON.parse(stateString) || initialState;
+    }
+    this.setState(state, this.filterTask);
   }
 
   toggleFilter = () => {
@@ -74,6 +60,7 @@ export default class TaskList extends Component {
     }
 
     this.setState({visibleTasks});
+    AsyncStorage.setItem('tasksState', JSON.stringify(this.state));
   };
 
   toggleTask = (taskId: number) => {
