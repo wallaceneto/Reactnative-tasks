@@ -9,6 +9,7 @@ const styles = StyleSheet.create({
     borderColor: '#AAA',
     alignItems: 'center',
     paddingVertical: 10,
+    backgroundColor: '#fff',
   },
   checkContainer: {
     width: '20%',
@@ -38,6 +39,28 @@ const styles = StyleSheet.create({
     fontFamily: commonStyles.fontFamily,
     color: commonStyles.colors.subText,
     fontSize: 12,
+  },
+  right: {
+    backgroundColor: 'red',
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'flex-end',
+    paddingHorizontal: 20,
+  },
+  left: {
+    flex: 1,
+    backgroundColor: 'red',
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  excludeIcon: {
+    marginLeft: 10,
+  },
+  excludeText: {
+    fontFamily: commonStyles.fontFamily,
+    color: '#fff',
+    fontSize: 20,
+    margin: 10,
   },
 });
 
