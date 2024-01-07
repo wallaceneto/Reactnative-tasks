@@ -12,19 +12,8 @@ import '../../../node_modules/moment/locale/pt-br';
 import {GestureHandlerRootView, Swipeable} from 'react-native-gesture-handler';
 
 import styles from './styles';
+import {getCheckView} from './functions';
 import {TaskType} from '../../global/types';
-
-function getCheckView(doneAt?: Date) {
-  if (doneAt) {
-    return (
-      <View style={styles.done}>
-        <Icon name="check" size={15} color={'#fff'} />
-      </View>
-    );
-  } else {
-    return <View style={styles.pending} />;
-  }
-}
 
 export default function Task(props: TaskType) {
   const doneOrNotStyle: TextStyle = props.doneAt
@@ -35,7 +24,9 @@ export default function Task(props: TaskType) {
 
   const getRightContent = () => {
     return (
-      <TouchableOpacity style={styles.right}>
+      <TouchableOpacity
+        style={styles.right}
+        onPress={() => props.onDelete && props.onDelete(props.id)}>
         <Icon name="trash" size={25} color="#fff" />
       </TouchableOpacity>
     );
@@ -54,11 +45,16 @@ export default function Task(props: TaskType) {
     <GestureHandlerRootView>
       <Swipeable
         renderRightActions={getRightContent}
-        renderLeftActions={getLeftContent}>
+        renderLeftActions={getLeftContent}
+        onSwipeableOpen={direction => {
+          if (direction === 'left') {
+            props.onDelete && props.onDelete(props.id);
+          }
+        }}>
         <View style={styles.container}>
           <TouchableWithoutFeedback
             onPress={() => {
-              props.toggleTask ? props.toggleTask(props.id) : () => {};
+              props.onToggleTask ? props.onToggleTask(props.id) : () => {};
             }}>
             <View style={styles.checkContainer}>
               {getCheckView(props.doneAt)}
